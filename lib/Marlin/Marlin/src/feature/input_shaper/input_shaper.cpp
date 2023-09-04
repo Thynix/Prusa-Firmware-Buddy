@@ -452,7 +452,7 @@ static bool input_shaper_state_update(input_shaper_state_t &is_state, const int 
 }
 
 FORCE_INLINE float calc_time_for_distance(const input_shaper_step_generator_t &step_generator, const float distance) {
-    return calc_time_for_distance(step_generator.start_v, step_generator.accel, distance, step_generator.is_state->step_dir);
+    return std::max(calc_time_for_distance(step_generator.start_v, step_generator.accel, distance, step_generator.is_state->step_dir), 0.f);
 }
 
 FORCE_INLINE void input_shaper_step_generator_update(input_shaper_step_generator_t &step_generator) {

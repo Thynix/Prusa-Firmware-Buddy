@@ -227,8 +227,8 @@ string_view_utf8 FooterItemBed::static_makeView(int value) {
 }
 
 string_view_utf8 FooterItemAllNozzles::static_makeView(int value) {
-    static constexpr const char *left_aligned_str = "T%u:%u\177C";
-    static constexpr const char *const_size_str = "T%u:%3u\177C";
+    static constexpr const char *left_aligned_str = "T%u:%u\xC2\xB0\x43"; // degree Celsius
+    static constexpr const char *const_size_str = "T%u:%3u\xC2\xB0\x43";
 
     static std::array<char, 10> buff;
 

@@ -87,11 +87,11 @@ void SelftestFrameLoadcell::change() {
         txt_phase = N_("Cooling down.\n\nDo not touch the nozzle!");
         icon_id = &img::hand_with_nozzle0_154x100;
 
-        int16_t temperature = dt.temperature; // Make a local copy
+        int16_t temperature = dt.temperature;                                     // Make a local copy
         if ((temperature < 0) || (temperature > 999)) {
-            snprintf(txt_big_buffer, std::size(txt_big_buffer), "-\177C");
+            snprintf(txt_big_buffer, std::size(txt_big_buffer), "-\xC2\xB0\x43"); // Degree Celsius
         } else {
-            snprintf(txt_big_buffer, std::size(txt_big_buffer), "%u\177C", static_cast<unsigned int>(temperature));
+            snprintf(txt_big_buffer, std::size(txt_big_buffer), "%u\xC2\xB0\x43", static_cast<unsigned int>(temperature));
         }
         txt_big = string_view_utf8::MakeRAM(reinterpret_cast<uint8_t *>(txt_big_buffer));
         txt_big_blink = true;

@@ -26,10 +26,10 @@ protected:
     SpinType value;
     size_t spin_val_width;
 
-    static Rect16::Width_t calculateExtensionWidth(size_t unit_len, char uchar, size_t value_max_digits);
+    static Rect16::Width_t calculateExtensionWidth(size_t unit_len, unichar uchar, size_t value_max_digits);
     Rect16 getSpinRect(Rect16 extension_rect) const;
     Rect16 getUnitRect(Rect16 extension_rect) const;
-    void changeExtentionWidth(size_t unit_len, char uchar, size_t width);
+    void changeExtentionWidth(size_t unit_len, unichar uchar, size_t width);
 
     virtual void click(IWindowMenu &window_menu) final;
     virtual void touch(IWindowMenu &window_menu, point_ui16_t relative_touch_point) final;
@@ -78,7 +78,7 @@ WI_SPIN_t<T>::WI_SPIN_t(T val, const Config &cnf, string_view_utf8 label, const 
 
     spin_val_width = cnf.txtMeas(val);
     size_t unit_len = 0;
-    char uchar = 0;
+    unichar uchar = 0;
     if (config.Unit() != nullptr) {
         string_view_utf8 un = units;
         uchar = un.getUtf8Char();
@@ -102,7 +102,7 @@ invalidate_t WI_SPIN_t<T>::change(int dif) {
             changeExtentionWidth(0, 0, config.txtMeas(value));
         } else {
             string_view_utf8 un = units;
-            char uchar = un.getUtf8Char();
+            unichar uchar = un.getUtf8Char();
             un.rewind();
             changeExtentionWidth(units.computeNumUtf8CharsAndRewind(), uchar, config.txtMeas(value));
         }
@@ -139,7 +139,7 @@ public: // todo private
 
 protected:
     void printSpinToBuffer() {
-        float display = period_to_speed(X_MICROSTEPS, int(value), get_steps_per_unit_x());
+        float display = period_to_speed(get_microsteps_x(), int(value), get_steps_per_unit_x());
         int chars = snprintf(spin_text_buff.data(), spin_text_buff.size(), "%f", double(display));
         changeExtentionWidth(0, 0, chars);
     }
